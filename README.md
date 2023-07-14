@@ -3,6 +3,9 @@ A Project developed in RocketSeat's NodeJS course - Ignite
 
 Desenvolver um aplicativo que sirva para pessoa fazer check in nas academias próximas
 
+npx prisma migrate dev // iniciar o database
+docker compose up // rodar o docker-compose
+
 # App
 
 GymPass style app.
