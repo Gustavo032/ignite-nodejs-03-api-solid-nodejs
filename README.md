@@ -3,7 +3,11 @@ A Project developed in RocketSeat's NodeJS course - Ignite
 
 Desenvolver um aplicativo que sirva para pessoa fazer check in nas academias próximas
 
-npx prisma migrate dev // iniciar o database
+npx prisma migrate dev // roda o arquivo schema.prisma e compara com o banco de dados se tem alterações 
+
+npx prisma migrate deploy // roda todas as migrations no banco de dados
+
+npx prisma studio // painel prara visualizar o banco de dados
 docker compose up // rodar o docker-compose
 
 # App

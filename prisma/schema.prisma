@@ -11,10 +11,47 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-
-  nome  String
-  email String @unique
+  id            String    @id @default(uuid())
+  nome          String
+  email         String    @unique
+  password_hash String
+  created_at    DateTime  @default(now())
+  // criptografia => Vai e Volta
+  // Hashing => só podemos Ir // não descriptografa
+  CheckIns      CheckIn[] // varios checkin no mesmo usuário
+  //camelCase aqui pois não serão criados no banco de dados, só para manipular melhor no JS
 
   @@map("users")
 }
+
+model CheckIn {
+  id           String    @id @default(uuid())
+  created_at   DateTime  @default(now())
+  validated_at DateTime?
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  gym    Gym    @relation(fields: [gym_id], references: [id])
+  gym_id String
+
+  @@map("check_ins")
+}
+
+model Gym {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  phone       String
+  latutude    String
+  longitude   String
+  checkIns    CheckIn[]
+
+  @@map("gyms")
+}
+
+// 1-1 um dado pra outro dado de outra tabela (poderiam estar na mesma tabela, só estão separados por semantica)
+// 1-N uma informação de uma tabela pode estar com outros registros de outra tabela
+// n-n um registro na tabela que pode estar com varios registros de outra e um registro dessa outra tabela pode estar relacionada com outro registro da tabela inicial
+
+// 
