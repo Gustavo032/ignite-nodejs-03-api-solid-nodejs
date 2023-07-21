@@ -53,5 +53,3 @@ model Gym {
 // 1-1 um dado pra outro dado de outra tabela (poderiam estar na mesma tabela, só estão separados por semantica)
 // 1-N uma informação de uma tabela pode estar com outros registros de outra tabela
 // n-n um registro na tabela que pode estar com varios registros de outra e um registro dessa outra tabela pode estar relacionada com outro registro da tabela inicial
-
-// 
