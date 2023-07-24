@@ -1,26 +1,7 @@
-import { prisma } from './lib/prisma'
 import fastify from 'fastify'
-import { z } from 'zod'
+import { appRoutes } from './http/routes'
 
 export const app = fastify()
 
-app.post('/users', async (request, reply) => {
-  const registerBodySchema = z.object({
-    name: z.string(),
-    email: z.string().email(),
-    password: z.string().min(6),
-  })
-
-  const { name, email, password } = registerBodySchema.parse(request.body)
-  // throw automático no erro se essa validação falhar, nenhum código roda se falhar
-
-  await prisma.user.create({
-    data: {
-      nome: name,
-      email,
-      password_hash: password,
-    },
-  })
-
-  return reply.status(201).send()
-})
+// CONTROLLERs: São as funções que lidam com os dados da requisição e devolve. Relacionada com algum frameworks.
+app.register(appRoutes)
