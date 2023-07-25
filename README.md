@@ -8,6 +8,7 @@ npx prisma migrate dev // roda o arquivo schema.prisma e compara com o banco de 
 npx prisma migrate deploy // roda todas as migrations no banco de dados
 
 npx prisma studio // painel prara visualizar o banco de dados
+
 docker compose up // rodar o docker-compose
 
 # App
