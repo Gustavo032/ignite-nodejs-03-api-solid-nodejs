@@ -10,10 +10,12 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
   })
   // $2a$06$ZkvspiooheklSO3jydiw3ugE5xgphJ.KKZX9x08MLIpmAzkarlxXa
 
-  const { name, email, password } = registerBodySchema.parse(request.body)
+  const { email, password } = registerBodySchema.parse(request.body)
+  const nome = registerBodySchema.parse(request.body).name
+
   // throw automático no erro se essa validação falhar, nenhum código roda se falhar
   try {
-    await registerUseCase({ name, email, password })
+    await registerUseCase({ nome, email, password })
   } catch (e) {
     console.log(e)
     return reply.status(409).send()
