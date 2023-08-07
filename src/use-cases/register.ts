@@ -8,6 +8,10 @@ interface registerUseCaseRequest {
   password: string
 }
 
+// SOLID
+// D = Dependecy Inversion Princple
+//
+
 export async function registerUseCase({
   nome,
   email,
