@@ -1,6 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
-import { registerUseCase } from '@/use-cases/register'
+import { RegisterUseCase } from '@/use-cases/register'
+import { PrismaUsersRepository } from '@/repositories/prisma-users-repository'
 
 export async function register(request: FastifyRequest, reply: FastifyReply) {
   const registerBodySchema = z.object({
@@ -15,7 +16,9 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
 
   // throw automático no erro se essa validação falhar, nenhum código roda se falhar
   try {
-    await registerUseCase({ nome, email, password })
+    const usersRepository = new PrismaUsersRepository()
+    const registerUseCase = new RegisterUseCase(usersRepository)
+    await registerUseCase.execute({ nome, email, password })
   } catch (e) {
     console.log(e)
     return reply.status(409).send()

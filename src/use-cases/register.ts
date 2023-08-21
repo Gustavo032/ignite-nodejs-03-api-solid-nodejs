@@ -1,5 +1,4 @@
 import { prisma } from '@/lib/prisma'
-import { PrismaUsersRepository } from '@/repositories/prisma-users-repository'
 import { hash } from 'bcryptjs'
 
 interface registerUseCaseRequest {
@@ -8,34 +7,35 @@ interface registerUseCaseRequest {
   password: string
 }
 
-// SOLID
+// SOLID - 5 principios da programação
 // D = Dependecy Inversion Princple
 //
 
-export async function registerUseCase({
-  nome,
-  email,
-  password,
-}: registerUseCaseRequest) {
-  const password_hash = await hash(password, 6)
+export class RegisterUseCase {
+  constructor(private UsersRepository: any) {}
 
-  const userWithSameEmail = await prisma.user.findUnique({
-    where: {
+  async execute({ nome, email, password }: registerUseCaseRequest) {
+    const password_hash = await hash(password, 6)
+
+    const userWithSameEmail = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    })
+
+    if (userWithSameEmail) {
+      // return reply.status(409).send() //http
+
+      throw new Error('Email já cadastrado')
+    }
+
+    // const prismaUsersRepository = new PrismaUsersRepository()
+
+    // this.UsersRepository / usando o repositorio passado aqui pra esse use-case
+    await this.UsersRepository.create({
+      nome,
       email,
-    },
-  })
-
-  if (userWithSameEmail) {
-    // return reply.status(409).send() //http
-
-    throw new Error('Email já cadastrado')
+      password_hash,
+    })
   }
-
-  const prismaUsersRepository = new PrismaUsersRepository()
-
-  await prismaUsersRepository.create({
-    nome,
-    email,
-    password_hash,
-  })
 }
