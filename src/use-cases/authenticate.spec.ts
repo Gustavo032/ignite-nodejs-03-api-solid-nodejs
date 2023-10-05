@@ -22,6 +22,7 @@ describe('Authenticate Use Case', () => {
 		//principal variável que está sendo testada 
     const sut = new AuthenticateUseCase(usersRepository)
 	})
+
 	
   it('should be able to Authenticate', async () => {
 		await usersRepository.create({
@@ -34,10 +35,9 @@ describe('Authenticate Use Case', () => {
       email: 'John12312@doe.com',
       password: '123456',
     })
-
-
     expect(user.id).toEqual(expect.any(String))
   })
+
 	
 	it('should be able to Authenticate with wrong email', async () => {
 		expect(()=>sut.execute({
