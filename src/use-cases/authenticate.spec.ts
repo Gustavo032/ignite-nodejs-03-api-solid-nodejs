@@ -16,9 +16,9 @@ let sut: AuthenticateUseCase
 
 describe('Authenticate Use Case', () => {
   beforeEach(() => {
-    let usersRepository = new InMemoryUsersRepository()
+    usersRepository = new InMemoryUsersRepository()
     // principal variável que está sendo testada
-    let sut = new AuthenticateUseCase(usersRepository)
+    sut = new AuthenticateUseCase(usersRepository)
   })
 
   it('should be able to Authenticate', async () => {

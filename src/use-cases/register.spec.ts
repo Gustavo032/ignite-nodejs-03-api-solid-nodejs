@@ -16,9 +16,8 @@ let sut:RegisterUseCase
 
 describe('Register Use Case', () => {
 	beforeEach(()=>{
-		let usersRepository = new InMemoryUsersRepository()
-    let sut = new RegisterUseCase(usersRepository)
-
+		usersRepository = new InMemoryUsersRepository()
+    sut = new RegisterUseCase(usersRepository)
 	})
 	
   it('should HASH user PASSWORD upon registration', async () => {
