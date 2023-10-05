@@ -16,8 +16,8 @@ let sut:RegisterUseCase
 
 describe('Register Use Case', () => {
 	beforeEach(()=>{
-		const usersRepository = new InMemoryUsersRepository()
-    const sut = new RegisterUseCase(usersRepository)
+		let usersRepository = new InMemoryUsersRepository()
+    let sut = new RegisterUseCase(usersRepository)
 
 	})
 	
