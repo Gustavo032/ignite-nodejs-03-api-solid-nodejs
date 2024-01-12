@@ -54,7 +54,7 @@ describe('Authenticate Use Case', () => {
     await expect(() =>
       sut.execute({
         email: 'John12312@doe.com',
-        password: '00',
+        password: 'wrongpassword',
       }),
     ).rejects.toBeInstanceOf(InvalidCredentialsError)
   })
