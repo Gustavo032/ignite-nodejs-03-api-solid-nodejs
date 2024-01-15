@@ -1,6 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
 import { CheckInUseCase } from './check-in'
+import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository'
+import { Decimal } from '@prisma/client/runtime/library'
 
 // testes unitários: testam uma parte isolada do nosso código;
 // a idéia é que consigamos testar a parte de cadastro da aplicação, fora das dependecias(sem DB etc...)
@@ -11,13 +13,22 @@ import { CheckInUseCase } from './check-in'
 
 let checkInsRepository: InMemoryCheckInsRepository
 let sut: CheckInUseCase
+let gymsRepository: InMemoryGymsRepository
 
 describe('Check-In Use Case', () => {
   beforeEach(() => {
     checkInsRepository = new InMemoryCheckInsRepository()
+    gymsRepository = new InMemoryGymsRepository()
     // principal variável que está sendo testada
-    sut = new CheckInUseCase(checkInsRepository)
-
+    sut = new CheckInUseCase(checkInsRepository, gymsRepository)
+		gymsRepository.items.push({
+			id: 'gym-01', 
+			title: 'gym-01', 
+			description: 'test description', 
+			latitude: new Decimal(0),
+			longitude: new Decimal(0),
+			phone: '123'
+		})
 		vi.useFakeTimers()
   })
 
@@ -25,12 +36,15 @@ describe('Check-In Use Case', () => {
 		vi.useRealTimers()
 	})
   it('should be able to check in', async () => {
+		
+		
 		const { checkIn } = await sut.execute({
       gymId: 'gym-01',
-			userId: 'user-01'
+			userId: 'user-01',
+			userLatitude: 0,
+			userLongitude: 0
     })
     
-console.log(checkIn.created_at)
   
     expect(checkIn.id).toEqual(expect.any(String))
   })
@@ -40,13 +54,17 @@ console.log(checkIn.created_at)
 
 		await sut.execute({
       gymId: 'gym-01',
-			userId: 'user-01'
+			userId: 'user-01',
+			userLatitude: 0,
+			userLongitude: 0
     })
 
   
    await expect(()=> sut.execute({
       gymId: 'gym-01',
-			userId: 'user-01'
+			userId: 'user-01',
+			userLatitude: 0,
+			userLongitude: 0
     })
     ).rejects.toBeInstanceOf(Error)
   })
