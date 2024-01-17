@@ -25,8 +25,8 @@ describe('Check-In Use Case', () => {
 			id: 'gym-01', 
 			title: 'gym-01', 
 			description: 'test description', 
-			latitude: new Decimal(0),
-			longitude: new Decimal(0),
+			latitude: new Decimal(-23.55452690),
+			longitude: new Decimal(-47.1226331),
 			phone: '123'
 		})
 		vi.useFakeTimers()
@@ -41,8 +41,8 @@ describe('Check-In Use Case', () => {
 		const { checkIn } = await sut.execute({
       gymId: 'gym-01',
 			userId: 'user-01',
-			userLatitude: 0,
-			userLongitude: 0
+			userLatitude: -23.5545269,
+			userLongitude: -47.1226331
     })
     
   
@@ -55,8 +55,8 @@ describe('Check-In Use Case', () => {
 		await sut.execute({
       gymId: 'gym-01',
 			userId: 'user-01',
-			userLatitude: 0,
-			userLongitude: 0
+			userLatitude: -23.5545269,
+			userLongitude: -47.1226331
     })
 
   
@@ -67,5 +67,24 @@ describe('Check-In Use Case', () => {
 			userLongitude: 0
     })
     ).rejects.toBeInstanceOf(Error)
+  })
+	it('should not be able to check in on distant gym', async () => {
+		gymsRepository.items.push({
+			id: 'gym-02', 
+			title: 'gym-02', 
+			description: 'test description', 
+			latitude: new Decimal(-23.56425),
+			longitude: new Decimal(-46.9216901),
+			phone: '123'
+		})
+  
+    await expect(()=>
+			sut.execute({
+				gymId: 'gym-02',
+				userId: 'user-01',
+				userLatitude: -23.554783,
+				userLongitude: -47.054809
+			})
+		).rejects.toBeInstanceOf(Error)
   })
 })
