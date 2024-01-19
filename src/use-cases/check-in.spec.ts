@@ -2,7 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
 import { CheckInUseCase } from './check-in'
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository'
-import { Decimal } from '@prisma/client/runtime/library'
+import { MaxDistanceError } from './errors/max-distace-error'
+import { MaxNumberOfCheckInsError } from './errors/max-number-of-check-ins'
 
 // testes unitários: testam uma parte isolada do nosso código;
 // a idéia é que consigamos testar a parte de cadastro da aplicação, fora das dependecias(sem DB etc...)
@@ -16,19 +17,21 @@ let sut: CheckInUseCase
 let gymsRepository: InMemoryGymsRepository
 
 describe('Check-In Use Case', () => {
-  beforeEach(() => {
+  beforeEach( async () => {
     checkInsRepository = new InMemoryCheckInsRepository()
     gymsRepository = new InMemoryGymsRepository()
     // principal variável que está sendo testada
     sut = new CheckInUseCase(checkInsRepository, gymsRepository)
-		gymsRepository.items.push({
+		await gymsRepository.create({
 			id: 'gym-01', 
 			title: 'gym-01', 
 			description: 'test description', 
-			latitude: new Decimal(-23.55452690),
-			longitude: new Decimal(-47.1226331),
+			latitude: -23.55452690,
+			longitude:-47.1226331,
 			phone: '123'
 		})
+
+		await 
 		vi.useFakeTimers()
   })
 
@@ -66,15 +69,15 @@ describe('Check-In Use Case', () => {
 			userLatitude: 0,
 			userLongitude: 0
     })
-    ).rejects.toBeInstanceOf(Error)
+    ).rejects.toBeInstanceOf(MaxNumberOfCheckInsError)
   })
 	it('should not be able to check in on distant gym', async () => {
-		gymsRepository.items.push({
+		await gymsRepository.create({
 			id: 'gym-02', 
 			title: 'gym-02', 
 			description: 'test description', 
-			latitude: new Decimal(-23.56425),
-			longitude: new Decimal(-46.9216901),
+			latitude: -23.56425,
+			longitude: -46.9216901,
 			phone: '123'
 		})
   
@@ -85,6 +88,6 @@ describe('Check-In Use Case', () => {
 				userLatitude: -23.554783,
 				userLongitude: -47.054809
 			})
-		).rejects.toBeInstanceOf(Error)
+		).rejects.toBeInstanceOf(MaxDistanceError)
   })
 })
