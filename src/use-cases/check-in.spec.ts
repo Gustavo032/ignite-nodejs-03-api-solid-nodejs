@@ -31,13 +31,13 @@ describe('Check-In Use Case', () => {
 			phone: '123'
 		})
 
-		await 
 		vi.useFakeTimers()
   })
 
 	afterEach(() => {
 		vi.useRealTimers()
 	})
+
   it('should be able to check in', async () => {
 		
 		
@@ -48,7 +48,6 @@ describe('Check-In Use Case', () => {
 			userLongitude: -47.1226331
     })
     
-  
     expect(checkIn.id).toEqual(expect.any(String))
   })
 
@@ -58,7 +57,7 @@ describe('Check-In Use Case', () => {
 		await sut.execute({
       gymId: 'gym-01',
 			userId: 'user-01',
-			userLatitude: -23.5545269,
+			userLatitude:  -23.55452690,
 			userLongitude: -47.1226331
     })
 
@@ -66,8 +65,8 @@ describe('Check-In Use Case', () => {
    await expect(()=> sut.execute({
       gymId: 'gym-01',
 			userId: 'user-01',
-			userLatitude: 0,
-			userLongitude: 0
+			userLatitude: -23.55452690,
+			userLongitude:  -47.1226331
     })
     ).rejects.toBeInstanceOf(MaxNumberOfCheckInsError)
   })
@@ -76,8 +75,8 @@ describe('Check-In Use Case', () => {
 			id: 'gym-02', 
 			title: 'gym-02', 
 			description: 'test description', 
-			latitude: -23.56425,
-			longitude: -46.9216901,
+			latitude: -23.55452690,
+			longitude:-47.1226331,
 			phone: '123'
 		})
   
@@ -85,8 +84,8 @@ describe('Check-In Use Case', () => {
 			sut.execute({
 				gymId: 'gym-02',
 				userId: 'user-01',
-				userLatitude: -23.554783,
-				userLongitude: -47.054809
+				userLatitude: -21.554783,
+				userLongitude: -4.054809
 			})
 		).rejects.toBeInstanceOf(MaxDistanceError)
   })
