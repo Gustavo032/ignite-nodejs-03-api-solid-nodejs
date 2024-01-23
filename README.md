@@ -12,11 +12,22 @@ npx prisma studio // painel prara visualizar o banco de dados
 docker compose up // rodar o docker-compose
 
 >>> criar useCase
+
 >>> criar repositories
->>> criar in-memory
+
+>>> criar in-memory 
+
 >>> terminar useCase
+
 >>> criar spec.ts
-	
+
+Após terminar todos usecases e testar:
+>> criar PrismaRepositories
+
+>> criar factories para todos use cases
+
+>> criar controllers
+
 # App
 
 GymPass style app.
