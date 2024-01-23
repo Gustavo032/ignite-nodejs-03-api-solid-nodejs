@@ -32,7 +32,7 @@ export class CheckInUseCase{
 		
 		//calcular distancia entre usuário e academia 
 		// > maior que 100m = erro 
-		// harvey sine
+		// haverseno 
 		const distance = getDistanceBetweenCoordinates(
 			{ latitude: userLatitude, longitude: userLongitude }, 
 			{ latitude: gym.latitude.toNumber(),
