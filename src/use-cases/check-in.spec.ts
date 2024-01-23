@@ -75,8 +75,8 @@ describe('Check-In Use Case', () => {
 			id: 'gym-02', 
 			title: 'gym-02', 
 			description: 'test description', 
-			latitude: -23.55452690,
-			longitude:-47.1226331,
+			latitude: -23.5656825,
+			longitude: -46.9302983,
 			phone: '123'
 		})
   
@@ -84,8 +84,8 @@ describe('Check-In Use Case', () => {
 			sut.execute({
 				gymId: 'gym-02',
 				userId: 'user-01',
-				userLatitude: -21.554783,
-				userLongitude: -4.054809
+				userLatitude: -23.5184979,
+				userLongitude: -46.8367259
 			})
 		).rejects.toBeInstanceOf(MaxDistanceError)
   })

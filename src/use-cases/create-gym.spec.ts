@@ -13,13 +13,13 @@ import { CreateGymUseCase } from './create-gym'
 let gymsRepository:InMemoryGymsRepository
 let sut:CreateGymUseCase
 
-describe('Register Use Case', () => {
+describe('Create Gym Use Case', () => {
 	beforeEach(()=>{
 		gymsRepository = new InMemoryGymsRepository()
     sut = new CreateGymUseCase(gymsRepository)
 	})
 	
-  it('create gym ', async () => {
+  it('should be able to create gym', async () => {
     const { gym } = await sut.execute({
       title: 'John Doe',
 			description: null,
