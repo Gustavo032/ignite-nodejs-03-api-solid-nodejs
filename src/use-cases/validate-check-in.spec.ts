@@ -13,11 +13,11 @@ describe('Validate Check-in Use Case', () => {
     sut = new ValidateCheckInUseCase(checkInsRepository)
     // principal variável que está sendo testada
 
-		// vi.useFakeTimers()
+		vi.useFakeTimers()
   })
 
 	afterEach(() => {
-		// vi.useRealTimers()
+		vi.useRealTimers()
 	})
 
   it('should be able to validate the check-in', async () => {
@@ -44,4 +44,22 @@ describe('Validate Check-in Use Case', () => {
 		).rejects.toBeInstanceOf(ResourceNotFoundError); 
 	})
 
+	it('should not be able to validate the check-in after 20 minutes of its creation', async () => {
+		vi.setSystemTime(new Date(2023, 0, 1, 13, 40))
+
+		const createdCheckIn = await checkInsRepository.create({
+			gym_id: 'gym-01',
+			user_id: 'user-01',
+		})
+
+		const twentyOneMinutes = 1000 * 60 * 21 
+		vi.advanceTimersByTime(twentyOneMinutes)		
+
+
+		await expect(()=>
+			sut.execute({
+				checkInId: createdCheckIn.id,
+			})
+		).rejects.toBeInstanceOf(Error)
+	})
 })
