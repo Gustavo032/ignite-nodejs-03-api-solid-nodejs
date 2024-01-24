@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 
-export async function verifyJWT(
+export async function verifyJwt(
 	request: FastifyRequest,
 	reply: FastifyReply
 ){

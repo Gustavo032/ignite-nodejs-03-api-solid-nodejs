@@ -6,17 +6,17 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   const registerBodySchema = z.object({
     title: z.string(),
     description: z.string().nullable(),
-    phone: z.string(),
-		latitude: z.number().refine(value => {
+    phone: z.coerce.string(),
+		latitude: z.coerce.number().refine((value) => {
 			return Math.abs(value) <= 90
 		}),
-		longitude: z.number().refine(value => {
+		longitude: z.coerce.number().refine((value) => {
 			return Math.abs(value) <= 180
-		})
+		}),
   })
   // $2a$06$ZkvspiooheklSO3jydiw3ugE5xgphJ.KKZX9x08MLIpmAzkarlxXa
 
-  const { title, description, phone, latitude, longitude } = registerBodySchema.parse(request.query)
+  const { title, description, phone, latitude, longitude } = registerBodySchema.parse(request.body)
 
   // throw automático no erro se essa validação falhar, nenhum código roda se falhar
 	const createGymUseCase = makeCreateGymUseCase()

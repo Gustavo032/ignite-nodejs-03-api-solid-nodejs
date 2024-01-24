@@ -1,15 +1,15 @@
 import { FastifyInstance } from 'fastify'
 import { register } from './register'
 import { authenticate } from './authenticate'
+import { verifyJwt } from '@/http/middlewares/verify-jwt'
 import { profile } from './profile'
-import { verifyJWT } from '../../middlewares/verify-jwt'
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post('/users', register)
 	app.post('/sessions', authenticate)
 	
 	// Authenticated routes
-	app.get('/me', { onRequest: [verifyJWT] }, profile)
+	app.get('/me', { onRequest: [verifyJwt] }, profile)
 }
 
 // Basic Auth: todas as rotas precisam ser enviadas com a senha e e-mail no cabeçalho 

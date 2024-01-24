@@ -4,7 +4,7 @@ import { GymsRepository } from "@/repositories/gyms-repository";
 import { ResourceNotFoundError } from "./errors/resource-not-found";
 import { getDistanceBetweenCoordinates } from "@/utils/get-distance-between-coordinates";
 import { MaxNumberOfCheckInsError } from "./errors/max-number-of-check-ins";
-import { MaxDistanceError } from "./errors/max-distace-error";
+import { MaxDistanceError } from "./errors/max-distance-error";
 import dayjs from "dayjs";
 import { LateCheckInValidationError } from "./errors/late-check-in-validation-error";
 

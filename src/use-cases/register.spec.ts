@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { RegisterUseCase } from '@/use-cases/register'
 import { compare } from 'bcryptjs'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
-import { UserAlreadyExistsError } from './errors/use-already-exists-error'
+import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 
 // testes unitários: testam uma parte isolada do nosso código;
 // a idéia é que consigamos testar a parte de cadastro da aplicação, fora das dependecias(sem DB etc...)

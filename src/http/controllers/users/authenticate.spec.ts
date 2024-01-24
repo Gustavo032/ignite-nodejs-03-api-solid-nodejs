@@ -15,15 +15,15 @@ describe('Authenticate (e2e)', () => {
 		await request(app.server)
 		.post('/users')
 		.send({
-			name: 'John Doe',
-			email: 'johndoe@gmail.com',
+			nome: 'Gustavo Ramos',
+			email: 'gustavoramos@gmail.com',
 			password: '123456'
 		})
 
 		const response = await request(app.server)
 		.post('/sessions')
 		.send({
-			email: 'johndoe@gmail.com',
+			email: 'gustavoramos@gmail.com',
 			password: '123456'
 		})
 

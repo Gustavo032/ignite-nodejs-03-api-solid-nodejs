@@ -23,9 +23,9 @@ describe('Create Gym Use Case', () => {
     const { gym } = await sut.execute({
       title: 'John Doe',
 			description: null,
+			phone: '11971689500', 
 			latitude: -23.5545269,
 			longitude: -47.1226331,
-			phone: '11971689500'
     })
 
     expect(gym.id).toEqual(expect.any(String))
