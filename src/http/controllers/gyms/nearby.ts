@@ -15,7 +15,7 @@ const nearbyGymsQuerySchema = z.object({
   })
   // $2a$06$ZkvspiooheklSO3jydiw3ugE5xgphJ.KKZX9x08MLIpmAzkarlxXa
 
-  const { latitude, longitude } = nearbyGymsQuerySchema.parse(request.body)
+  const { latitude, longitude } = nearbyGymsQuerySchema.parse(request.query)
 
   // throw automático no erro se essa validação falhar, nenhum código roda se falhar
 	const fetchNearbyGymsUseCase = makeFetchNeabyGymsUseCase()

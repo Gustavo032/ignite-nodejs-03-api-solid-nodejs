@@ -10,7 +10,7 @@ const searchGymsQuerySchema = z.object({
   })
   // $2a$06$ZkvspiooheklSO3jydiw3ugE5xgphJ.KKZX9x08MLIpmAzkarlxXa
 
-  const { q, page } = searchGymsQuerySchema.parse(request.body)
+  const { q, page } = searchGymsQuerySchema.parse(request.query)
 
   // throw automático no erro se essa validação falhar, nenhum código roda se falhar
 	const searchGymsUseCase = makeSearchGymsUseCase()

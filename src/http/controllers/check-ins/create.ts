@@ -1,12 +1,14 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 import { makeCreateGymUseCase } from '@/use-cases/factories/make-create-gym-use-case'
+import { makeCheckInUseCase } from '@/use-cases/factories/make-check-in-use-case'
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
-  const registerBodySchema = z.object({
-    title: z.string(),
-    description: z.string().nullable(),
-    phone: z.string(),
+	const createCheckInParamsSchema = z.object({
+		gymId: z.string().uuid(),
+	})
+
+  const createCheckInBodySchema = z.object({
 		latitude: z.number().refine(value => {
 			return Math.abs(value) <= 90
 		}),
@@ -16,18 +18,17 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   })
   // $2a$06$ZkvspiooheklSO3jydiw3ugE5xgphJ.KKZX9x08MLIpmAzkarlxXa
 
-  const { title, description, phone, latitude, longitude } = registerBodySchema.parse(request.query)
+  const { gymId } = createCheckInParamsSchema.parse(request.params)
+  const { latitude, longitude } = createCheckInBodySchema.parse(request.body)
 
   // throw automático no erro se essa validação falhar, nenhum código roda se falhar
-	const createGymUseCase = makeCreateGymUseCase()
+	const checkInUseCase = makeCheckInUseCase()
 
-	await createGymUseCase.execute({
-		title,
-		description,
-		phone,
-		latitude,
-		longitude 
+	await checkInUseCase.execute({
+		gymId,
+		userId: request.user.sub,
+		userLatitude: latitude,
+		userLongitude: longitude
 	})
-  
   return reply.status(201).send()
 }
