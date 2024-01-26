@@ -5,8 +5,7 @@ export default defineConfig({
   // conseguir ler importações com arrobas
   plugins: [tsconfigPaths()],
 	test: {
-		environmentMatchGlobs: [
-			['src/http/controllers/*', 'prisma']
-		]
+		environmentMatchGlobs: [['src/http/controllers/**/*.spec.ts', 'prisma']],
+
 	}
 })
