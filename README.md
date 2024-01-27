@@ -28,6 +28,15 @@ Após terminar todos usecases e testar:
 
 >> criar controllers
 
+CI ==== Continuous Integration
+receber codigo no repositorio e fazer verificações validações pra conseguir receber de maneira mais automatizadas atualizações do código 
+
+code reviewers etc.
+
+CD ==== Continuous Deployment/Delivery
+quando recebermos a atualização, realizar o deploy automaticamente
+
+
 # App
 
 GymPass style app.
