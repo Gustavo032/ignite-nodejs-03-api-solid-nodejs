@@ -10,12 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  MEMBER
+}
+
 model User {
   id            String    @id @default(uuid())
   nome          String
   email         String    @unique
   password_hash String
   created_at    DateTime  @default(now())
+  role          Role      @default(MEMBER)
   // criptografia => Vai e Volta
   // Hashing => só podemos Ir // não descriptografa
   CheckIns      CheckIn[] // varios checkin no mesmo usuário
